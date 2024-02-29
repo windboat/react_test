@@ -3,21 +3,21 @@ import logo from './logo.svg';
 import './App.css';
 
 function App() {
+  const searchParams = new URLSearchParams(window.location.search);
+  const url = searchParams.get('url');
+  console.log("url=" + url);
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+        <p>protocol={window.location.protocol}</p>
+        <p>host={window.location.host}</p>
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+        pathname={window.location.pathname}
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <p>
+        params={window.location.search}
+        </p>
       </header>
     </div>
   );
