@@ -8,7 +8,7 @@ var socket = null;
 
 function App() {
   const searchParams = new URLSearchParams(window.location.search);
-  const url = searchParams.get('url');
+  var url = searchParams.get('url');
   console.log("url=" + url);
   if(url == null || url == "") {
     url = "10.1.1.34:8288";
@@ -16,7 +16,7 @@ function App() {
 
   useEffect(() => {
     console.log("constructor...");
-    socket = new WebSocket('ws://'+url);;
+    socket = new WebSocket('wss://'+url);;
     // Connection opened
     socket.addEventListener("open", handleOpen);
     // Listen for messages
