@@ -16,7 +16,8 @@ function App() {
 
   useEffect(() => {
     console.log("constructor...");
-    socket = new WebSocket('wss://'+url);;
+    // socket = new WebSocket('wss://'+url, { rejectUnauthorized: false });
+    socket = new WebSocket('wss://'+url);
     // Connection opened
     socket.addEventListener("open", handleOpen);
     // Listen for messages
