@@ -4,7 +4,7 @@ import './App.css';
 import { useState } from 'react';
 import { useEffect } from 'react';
 
-var socket = null;
+var port = 'undefined';
 
 function App() {
   const searchParams = new URLSearchParams(window.location.search);
@@ -16,48 +16,45 @@ function App() {
 
   useEffect(() => {
     console.log("constructor...");
-    // socket = new WebSocket('wss://'+url, { rejectUnauthorized: false });
-    socket = new WebSocket('wss://'+url);
-    // Connection opened
-    socket.addEventListener("open", handleOpen);
-    // Listen for messages
-    socket.addEventListener("message", handleMessage);
-    socket.addEventListener("close", handleClose);
-    socket.addEventListener("error", handleError);
+
+    window.addEventListener("message", handleMessage);
 
     return () => {
       console.log("desconstructor...");
-      socket.removeEventListener("open", handleOpen);
-      socket.removeEventListener("message", handleMessage);
-      socket.removeEventListener("close", handleClose);
-      socket.removeEventListener("error", handleError);
-      if(socket.readyState == WebSocket.OPEN) {
-        socket.close();
-      }
+      window.removeEventListener("message", handleMessage);
     };
   }, []);
 
-  function handleOpen(event: Event) {
-    socket.send("Hello Server!");
-  }
 
-  function handleMessage(event:MessageEvent) {
-    console.log("Message from server ", event.data);
-   setMessage(event.data);
-  }
-
-  function handleClose (event: Event) {
-    console.log("disconnect ", event);
-  }
-
-  function handleError(event: Event) {
-    console.log("error ", event);
+  function handleMessage(event) {
+      // We are receiveing messages from any origin, you can check of the origin by
+      // using event.origin
+    
+      console.log("event.origin=" + event.origin);
+      console.log("event port size=" + event.ports.length);
+      // get the port then use it for communication;
+      var port = event.ports[0];
+      console.log("port=" + port);
+      setStatus("event.origin=" + event.origin + "\n" 
+      + "event port size=" + event.ports.length + "\n"
+      + "port=" + port);
+      if (typeof port === 'undefined') return;
+    
+      // Post message on this port.
+      port.postMessage("Test")
+    
+      // Receive upcoming messages on this port.
+      port.onmessage = function(event) {
+        console.log("[PostMessage1] Got message" + event.data);
+      };
   }
 
  var [message, setMessage] = useState("");
+ var [status, setStatus] = useState("");
 
   function sendMessage() {
-    socket.send("message from client, " + new Date().toString());
+    if (typeof port === 'undefined') return;
+    port.postMessage("message from client, " + new Date().toString());
   }
 
   return (
@@ -69,6 +66,7 @@ function App() {
         <br/>pathname={window.location.pathname}
         <br/>params={window.location.search}
         </p>
+        <p>status: {status}</p>
         <p>message: {message}</p>
         <button onClick={sendMessage}>send message to server</button>
       </header>

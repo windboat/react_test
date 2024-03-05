@@ -6,7 +6,36 @@
       "sha256_cert_fingerprints":
       ["BC:8C:08:F2:C3:EE:71:24:0D:A8:D4:D5:A5:A9:7D:9D:0D:BA:FF:4B:13:6A:43:A9:80:DD:32:0A:6E:E9:08:93"]
     }
-    },
+  },
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "windboat.twa",
+      "sha256_cert_fingerprints":
+      ["BC:8C:08:F2:C3:EE:71:24:0D:A8:D4:D5:A5:A9:7D:9D:0D:BA:FF:4B:13:6A:43:A9:80:DD:32:0A:6E:E9:08:93"]
+    }
+  },
+  
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.google.androidbrowserhelper.demos.twapostmessage",
+      "sha256_cert_fingerprints":
+      ["BC:8C:08:F2:C3:EE:71:24:0D:A8:D4:D5:A5:A9:7D:9D:0D:BA:FF:4B:13:6A:43:A9:80:DD:32:0A:6E:E9:08:93"]
+    }
+  },
+  {
+    "relation": ["delegate_permission/common.use_as_origin"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.google.androidbrowserhelper.demos.twapostmessage",
+      "sha256_cert_fingerprints":
+      ["BC:8C:08:F2:C3:EE:71:24:0D:A8:D4:D5:A5:A9:7D:9D:0D:BA:FF:4B:13:6A:43:A9:80:DD:32:0A:6E:E9:08:93"]
+    }
+  },
+
     {
     "relation": ["delegate_permission/common.handle_all_urls"],
     "target": {
