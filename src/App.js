@@ -4,7 +4,7 @@ import './App.css';
 import { useState } from 'react';
 import { useEffect } from 'react';
 
-var port = 'undefined';
+var port;// type === 'undefined'
 
 function App() {
   const searchParams = new URLSearchParams(window.location.search);
@@ -33,11 +33,11 @@ function App() {
       console.log("event.origin=" + event.origin);
       console.log("event port size=" + event.ports.length);
       // get the port then use it for communication;
-      var port = event.ports[0];
+      port = event.ports[0];
       console.log("port=" + port);
-      setStatus("event.origin=" + event.origin + "\n" 
-      + "event port size=" + event.ports.length + "\n"
-      + "port=" + port);
+      setStatus("event.origin=" + event.origin 
+      + ", event port size=" + event.ports.length 
+      + ", port=" + port);
       if (typeof port === 'undefined') return;
     
       // Post message on this port.
@@ -46,6 +46,8 @@ function App() {
       // Receive upcoming messages on this port.
       port.onmessage = function(event) {
         console.log("[PostMessage1] Got message" + event.data);
+        setMessage(event.data);
+        port.postMessage("ACK");
       };
   }
 
@@ -53,7 +55,12 @@ function App() {
  var [status, setStatus] = useState("");
 
   function sendMessage() {
-    if (typeof port === 'undefined') return;
+    console.log("sendMessage: typeof port=" + (typeof port));
+    if (typeof port === 'undefined') {
+      console.log("port is undefined, cannot send message");
+      alert("port is undefined, cannot send message, " + port);
+      return;
+    } 
     port.postMessage("message from client, " + new Date().toString());
   }
 
