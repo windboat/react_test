@@ -41,7 +41,7 @@ function App() {
       if (typeof port === 'undefined') return;
     
       // Post message on this port.
-      port.postMessage("Test")
+      port.postMessage("Test message from web");
     
       // Receive upcoming messages on this port.
       port.onmessage = function(event) {
@@ -60,7 +60,7 @@ function App() {
       console.log("port is undefined, cannot send message");
       alert("port is undefined, cannot send message, " + port);
       return;
-    } 
+    }
     port.postMessage("message from client, " + new Date().toString());
   }
 
